@@ -1,4 +1,4 @@
-var google = require('./google.js')
+var google = require('./google.js');
 
 exports.list = function(oauth2tokens, callback) {
   google.login(oauth2tokens);
@@ -8,12 +8,13 @@ exports.list = function(oauth2tokens, callback) {
     if(err) { callback(err); return; }
 
     //Request all calendars
-    config.authexecute(client.calendar.calendarList.list(),
+    google.authexecute(client.calendar.calendarList.list(),
       function processCalendarRequest(err, cal) {
         if(err) { callback(err); return; }
-        if(err) { callback(null, cal); return; }
-      });
-    });
+        if(err) { callback(null, cal); }
+      }
+    );
+  });
 };
 
 exports.get = function(oauth2tokens, callback) {
