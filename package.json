@@ -1,0 +1,12 @@
+{
+  "name": "Lovschema",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node webapp.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "googleapis": "*"
+  }
+}
