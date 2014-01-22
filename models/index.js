@@ -1,6 +1,5 @@
 var mongoose = require('../config.js').mongoose;
 
-
 //Event
 var EventSchema = {
   name: String,

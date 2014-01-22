@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html x-ng-app="lovschema">
+  <head>
+    <meta charset="utf-8">
+    <title>Lovschema</title>
+
+    <link rel="stylesheet" href="/stylesheets/normalize.css">
+    <link rel="stylesheet" href="/stylesheets/foundation.min.css">
+    <link rel="stylesheet" href="/stylesheets/lovschema.css">
+
+    <script src="/javascripts/vendor/modernizr.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-resource.min.js"></script>
+    <script src="/javascripts/lovschema.js"></script>
+  </head>
+  <body>
+
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1><a x-ng-href="#">Lovschema</a></h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a x-ng-href="">Menu</a></li>
+    </ul>
+
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li><a x-ng-href="#register">Register</a></li>
+        <li class="has-form">
+          <form method="post">
+            <div class="row collapse">
+              <div class="large-4 small-4 columns">
+                <input type="text" placeholder="Username">
+              </div>
+              <div class="large-1 small-1 columns">&nbsp;</div>
+              <div class="large-5 small-5 columns">
+                <input type="password" placeholder="Password">
+              </div>
+              <div class="large-2 small-2 columns">
+                <a href="#" class="alert button expand">Login</a>
+              </div>
+            </div>
+          </form>
+        </li>
+      </ul>
+    </section>
+  </nav>
+
+  <div class="row">
+    <div class="large-12 columns" x-ng-view="">
+
+    </div>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="/javascripts/foundation.min.js"></script>
+  <script> $(document).foundation(); </script>
+  </body>
+</html>

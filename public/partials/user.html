@@ -1,0 +1,43 @@
+<h1>Edit user settings</h1>
+
+<h2>Edit calendars</h2>
+<form method="post">
+  <div class="row">
+    <div class="large-6 medium-6 small-12 columns">
+      <label>Add calendar ID</label>
+      <div class="row collapse">
+        <div class="small-10 columns">
+          <input type="text" x-ng-model="current_calendar" name="edit_calendar" placeholder="Google Calendar ID">
+        </div>
+        <div class="small-2 columns">
+          <a x-ng-href="" x-ng-click="add_calendar()" class="button postfix">Add</a>
+        </div>
+      </div>
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+      <div class="row" x-ng-repeat="cal in calendars">
+        <div class="small-10 columns">{{cal.id}}</div>
+        <div class="small-2 columns"><a href class="button tiny" x-ng-click="remove_calendar(cal)">X</a></div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<h2>Change password</h2>
+<form method="post">
+  <div class="row">
+    <div class="large-6 medium-6 small-12 columns">
+      <label>New password</label>
+      <input type="text" name="edit_password">
+    </div>
+    <div class="large-6 medium-6 small-12 columns">
+      <label>Confirm new password</label>
+      <input type="password" name="edit_password2">
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-12 columns">
+      <button>Change password</button>
+    </div>
+  </div>
+</form>

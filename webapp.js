@@ -6,6 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -30,8 +31,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.home.index);
-
 //Not used
 app.get('/oauth2/request', routes.oauth2.request);
 app.get('/oauth2/callback', routes.oauth2.callback);
@@ -51,6 +50,14 @@ app.get('/user/:username', routes.user.get);
 //Session
 app.post('/session', routes.session.create);
 app.delete('/session', routes.session.destroy);
+
+//Close connection on shutdown
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose disconnected on app termination');
+    process.exit(0);
+  });
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
