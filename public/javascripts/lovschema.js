@@ -1,4 +1,32 @@
-angular.module('lovschema', ['ngRoute'])
+angular.module('lovschema', ['ngRoute', 'ngResource'])
+
+  .factory( 'Resource', [ '$resource', function( $resource ) {
+    return function( url, params, methods ) {
+      var defaults = {
+        update: { method: 'put', isArray: false },
+        create: { method: 'post' }
+      };
+
+      methods = angular.extend( defaults, methods );
+
+      var resource = $resource( url, params, methods );
+
+      resource.prototype.$save = function() {
+        if ( !this.id ) {
+          return this.$create();
+        }
+        else {
+          return this.$update();
+        }
+      };
+
+      return resource;
+    };
+  }])
+  .factory( 'User', [ 'Resource', function( $resource ) {
+    return $resource( 'users/:id', { id: '@id' } );
+  }])
+
   .config(function($routeProvider) {
     $routeProvider
       .when('/', {
@@ -21,8 +49,14 @@ angular.module('lovschema', ['ngRoute'])
   .controller('CalendarCtrl', function($scope) {
   })
 
-  .controller('RegisterCtrl', function($scope) {
-  })
+  .controller('RegisterCtrl', ['$scope', 'User', function($scope, User) {
+    $scope.register = function(form) {
+      console.log($scope.username);
+      console.log($scope.password);
+
+      console.log($scope);
+    }
+  }])
 
   .controller('UserCtrl', function($scope) {
     $scope.calendars = [
