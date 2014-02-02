@@ -1,20 +1,25 @@
 <h1>Register</h1>
 <form x-ng-submit="register($event)" name="register_form">
   <div class="row">
+    <div class="large-12 columns">
+      <div class="panel error" x-ng-show="error">{{error}}</div>
+    </div>
+  </div>
+  <div class="row">
     <div class="large-6 medium-6 small-12 columns">
-      <label x-ng-class="{error: register_form.register_username.$invalid}">Username</label>
-      <input type="text" name="register_username" x-ng-model="username" required="required" x-ng-minlength="3" x-ng-maxlength="20" x-ng-trim="false" x-ng-class="{error: register_form.register_username.$invalid}">
-      <small class="error" x-ng-show="register_form.register_username.$invalid">Invalid entry</small>
+      <label x-ng-class="{error: register_form.register_username.$invalid && submitted }">Username</label>
+      <input type="text" name="register_username" x-ng-model="username" required="required" x-ng-minlength="3" x-ng-maxlength="20" x-ng-trim="false" x-ng-class="{error: register_form.register_username.$invalid && submitted}">
+      <small class="error" x-ng-show="register_form.register_username.$invalid && submitted">Invalid entry</small>
     </div>
     <div class="large-6 medium-6 small-12 columns">
-      <label x-ng-class="{error: register_form.register_password.$invalid}">Password</label>
-      <input type="password" name="register_password" x-ng-model="password" required="required" x-ng-minlength="6" x-ng-maxlength="64" x-ng-trim="false" x-ng-class="{error: register_form.register_password.$invalid}">
-      <small class="error" x-ng-show="register_form.register_password.$invalid">Invalid entry</small>
+      <label x-ng-class="{error: register_form.register_password.$invalid && submitted}">Password</label>
+      <input type="password" name="register_password" x-ng-model="password" required="required" x-ng-minlength="6" x-ng-maxlength="64" x-ng-trim="false" x-ng-class="{error: register_form.register_password.$invalid && submitted}">
+      <small class="error" x-ng-show="register_form.register_password.$invalid && submitted">Invalid entry</small>
     </div>
   </div>
   <div class="row">
     <div class="large-12 columns">
-      <button type="submit">Register</button>
+      <button type="submit" x-ng-disabled="submitting">Register</button>
     </div>
   </div>
 </form>

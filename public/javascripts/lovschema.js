@@ -1,4 +1,4 @@
-angular.module('lovschema', ['ngRoute', 'ngResource'])
+var lovschema = angular.module('lovschema', ['ngRoute', 'ngResource'])
 
   .factory( 'Resource', [ '$resource', function( $resource ) {
     return function( url, params, methods ) {
@@ -11,20 +11,30 @@ angular.module('lovschema', ['ngRoute', 'ngResource'])
 
       var resource = $resource( url, params, methods );
 
-      resource.prototype.$save = function() {
+      resource.prototype.$save = function(callback, error) {
         if ( !this.id ) {
-          return this.$create();
+          return this.$create(callback, error);
         }
         else {
-          return this.$update();
+          return this.$update(callback, error);
         }
       };
 
       return resource;
     };
   }])
+
   .factory( 'User', [ 'Resource', function( $resource ) {
-    return $resource( 'users/:id', { id: '@id' } );
+    return $resource( 'user/:id', { id: '@id' } );
+  }])
+
+  .factory( 'Login', ['User', function( User ) {
+    var loginService = {
+      username: false,
+      loggedIn: false
+    };
+
+    return loginService;
   }])
 
   .config(function($routeProvider) {
@@ -44,43 +54,4 @@ angular.module('lovschema', ['ngRoute', 'ngResource'])
       .otherwise({
         redirectTo:'/'
       });
-  })
-
-  .controller('CalendarCtrl', function($scope) {
-  })
-
-  .controller('RegisterCtrl', ['$scope', 'User', function($scope, User) {
-    $scope.register = function(form) {
-      console.log($scope.username);
-      console.log($scope.password);
-
-      console.log($scope);
-    }
-  }])
-
-  .controller('UserCtrl', function($scope) {
-    $scope.calendars = [
-      {id: 'calle.svensson@zeta-two.com'},
-      {id: 'a'}
-    ];
-    $scope.add_calendar = function() {
-      var new_id = $scope.current_calendar;
-      if(new_id !== undefined && new_id !== '') {
-
-        //TODO: Is this really the way to do it?
-        if($scope.calendars.every(function findExisting(cal) {
-          return new_id !== cal.id;
-        })) {
-          $scope.calendars.push({ id: new_id });
-          $scope.current_calendar = "";
-        }
-      }
-    };
-    $scope.remove_calendar = function(cal) {
-      var index = $scope.calendars.indexOf(cal);
-      if (index > -1) {
-        $scope.calendars.splice(index, 1);
-      }
-      //$scope.calendars.remove(cal);
-    };
   });
