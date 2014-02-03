@@ -12,11 +12,13 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-resource.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-cookies.min.js"></script>
     <script src="/javascripts/lovschema.js"></script>
     <script src="/javascripts/controllers.js"></script>
   </head>
   <body>
 
+  <div class="fixed">
   <nav class="top-bar" data-topbar>
     <ul class="title-area">
       <li class="name">
@@ -25,22 +27,24 @@
       <li class="toggle-topbar menu-icon"><a x-ng-href="">Menu</a></li>
     </ul>
 
-    <section class="top-bar-section">
+    <section class="top-bar-section" x-ng-controller="LoginCtrl">
       <!-- Right Nav Section -->
       <ul class="right">
-        <li><a x-ng-href="#register">Register</a></li>
-        <li class="has-form">
-          <form method="post">
+        <li x-ng-show="loggedIn"><a x-ng-href="#user">Welcome {{username}}!</a></li>
+        <li x-ng-show="loggedIn"><a class="alert button expand" x-ng-click="logout()">Log out</a></li>
+        <li x-ng-show="!loggedIn"><a x-ng-href="#register">Register</a></li>
+        <li x-ng-show="!loggedIn" class="has-form">
+          <form method="post" x-ng-submit="login()">
             <div class="row collapse">
               <div class="large-4 small-4 columns">
-                <input type="text" placeholder="Username">
+                <input type="text" placeholder="Username" x-ng-model="login_username">
               </div>
               <div class="large-1 small-1 columns">&nbsp;</div>
               <div class="large-5 small-5 columns">
-                <input type="password" placeholder="Password">
+                <input type="password" placeholder="Password" x-ng-model="login_password">
               </div>
               <div class="large-2 small-2 columns">
-                <a href="#" class="alert button expand">Login</a>
+                <button type="submit" href="#" class="alert button expand">Login</button>
               </div>
             </div>
           </form>
@@ -48,6 +52,7 @@
       </ul>
     </section>
   </nav>
+  </div>
 
   <div class="row">
     <div class="large-12 columns" x-ng-view="">

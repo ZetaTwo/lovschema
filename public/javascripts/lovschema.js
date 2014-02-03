@@ -1,4 +1,4 @@
-var lovschema = angular.module('lovschema', ['ngRoute', 'ngResource'])
+var lovschema = angular.module('lovschema', ['ngRoute', 'ngResource', 'ngCookies'])
 
   .factory( 'Resource', [ '$resource', function( $resource ) {
     return function( url, params, methods ) {
@@ -28,10 +28,34 @@ var lovschema = angular.module('lovschema', ['ngRoute', 'ngResource'])
     return $resource( 'user/:id', { id: '@id' } );
   }])
 
-  .factory( 'Login', ['User', function( User ) {
+  .factory( 'Session', [ 'Resource', function( $resource ) {
+    return $resource( 'session/:id', { id: '@id' } );
+  }])
+
+  .factory( 'Login', ['$rootScope', '$cookies', 'Session', function( $rootScope, $cookies, Session ) {
     var loginService = {
-      username: false,
-      loggedIn: false
+      session: false
+    };
+
+    loginService.login = function(credentials) {
+      loginService.session = new Session({username: credentials.username, password: credentials.password});
+      loginService.session.$save(function loggedIn(data, getResponseHeaders) {
+        $rootScope.$broadcast('loggedIn', data, getResponseHeaders);
+        $cookies.username = credentials.username;
+        $cookies.password = credentials.password;
+      }, function loginError(data, getResponseHeaders) {
+        $rootScope.$broadcast('loginError', data, getResponseHeaders);
+      });
+    };
+
+    if($cookies.username && $cookies.password) {
+      console.log(loginService);
+      loginService.login({ username: $cookies.username, password: $cookies.password});
+    }
+
+    loginService.logout = function(callback) {
+      loginService.session = false;
+      $rootScope.$broadcast('logout');
     };
 
     return loginService;

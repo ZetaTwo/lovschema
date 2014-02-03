@@ -1,18 +1,52 @@
 lovschema
+  .controller('LoginCtrl', ['$scope', 'Login', function($scope, Login) {
+    $scope.loggedIn = Login.loggedIn;
+    $scope.login = function() {
+      Login.login({username: $scope.login_username, password: $scope.login_password});
+    };
+
+    $scope.$on('loggedIn', function(event, data, getResponseHeaders) {
+      $scope.username = Login.session.username;
+      $scope.loggedIn = true;
+    });
+
+    $scope.$on('loginError', function(event, data, getResponseHeaders) {
+      $scope.loggedIn = false;
+    });
+
+    $scope.$on('logout', function(event) {
+
+    });
+
+    $scope.logout = function() {
+      Login.logout();
+      $scope.loggedIn = false;
+    };
+
+  }])
+
   .controller('CalendarCtrl', function($scope) {
   })
 
-  .controller('RegisterCtrl', ['$scope', '$location', 'User', function($scope, $location, User) {
+  .controller('RegisterCtrl', ['$scope', '$location', 'User', 'Login', function($scope, $location, User, Login) {
+    if(Login.session) {
+      $location.path('/user'); return;
+    }
+    $scope.$on('loggedIn', function(event) {
+      $location.path('/user'); return;
+    });
+
     $scope.submitted = false;
 
     $scope.register = function(form) {
       $scope.submitted = true;
-      $scope.submitting = true;
 
       //If not valid, return
       if(!$scope.register_form.$valid) {
         return false;
       }
+
+      $scope.submitting = true;
 
       //Create user and save
       var new_user = new User({ username: $scope.username, password: $scope.password});
@@ -28,11 +62,16 @@ lovschema
     }
   }])
 
-  .controller('UserCtrl', function($scope) {
-    $scope.calendars = [
-      {id: 'calle.svensson@zeta-two.com'},
-      {id: 'a'}
-    ];
+  .controller('UserCtrl', ['$scope', '$location', 'Login', function($scope, $location, Login) {
+    if(!Login.session) {
+      $location.path('/'); return;
+    }
+    $scope.calendars = [];
+
+    $scope.$on('logout', function(event) {
+      $location.path('/');
+    });
+
     $scope.add_calendar = function() {
       var new_id = $scope.current_calendar;
       if(new_id !== undefined && new_id !== '') {
@@ -51,6 +90,5 @@ lovschema
       if (index > -1) {
         $scope.calendars.splice(index, 1);
       }
-      //$scope.calendars.remove(cal);
     };
-  });
+  }]);
