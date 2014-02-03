@@ -1,3 +1,6 @@
+#IDEA Webstorm
+.idea
+
 #GitHub .gitignore for NodeJS
 lib-cov
 lcov.info
