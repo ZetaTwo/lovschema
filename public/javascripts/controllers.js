@@ -25,10 +25,14 @@ lovschema
 
   }])
 
-  .controller('CalendarCtrl', function($scope) {
-  })
+  .controller('CalendarCtrl', ['$scope', 'User', function($scope, User) {
+    var users = User.query(function getUsers(data, getResponseHeaders) {
+      $scope.users = data;
+    });
+  }])
 
   .controller('RegisterCtrl', ['$scope', '$location', 'User', 'Login', function($scope, $location, User, Login) {
+    console.log(Login);
     if(Login.session) {
       $location.path('/user'); return;
     }

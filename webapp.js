@@ -48,6 +48,7 @@ app.put('/user/:username', routes.user.update);
 app.get('/user/:username', routes.user.get);
 
 //Session
+app.get('/session', routes.session.get);
 app.post('/session', routes.session.create);
 app.delete('/session', routes.session.destroy);
 

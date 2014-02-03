@@ -2,6 +2,16 @@ var database = require('../models')
   , error = require('../library/error.js').error
   , bcrypt = require('bcrypt-nodejs');
 
+exports.get = function(req, res) {
+  console.log(req.session);
+
+  if(!req.session || !req.session.username) {
+    res.json(404, { error: "No session found." }); return;
+  }
+
+  res.json({ username: req.session.username });
+};
+
 exports.create = function(req, res) {
   //TODO: Sanitize input
   if(!req.body.username || !req.body.password) {
