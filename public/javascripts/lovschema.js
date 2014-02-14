@@ -68,6 +68,35 @@ var lovschema = angular.module('lovschema', ['ngRoute', 'ngResource', 'ngCookies
     return loginService;
   }])
 
+  //Date functions
+  .factory( 'Dates', function() {
+    var dates = {
+
+      //Rounds a dateTime to date at 00:00:00
+      // http://www.actionscript.org/forums/showthread.php3?t=213590
+      round: function( date ) {
+
+        var tm = date.valueOf();
+        var preTimezoneOffset = date.getTimezoneOffset();
+        var offset = preTimezoneOffset * 60 * 1000;
+
+        tm -= offset;                       //subtract the timezone offset
+        tm -= tm % (24 * 60 * 60 * 1000);   //subtract amount of time since midnight
+        tm += offset;                       //add on the timezone offset
+
+        var dt = new Date(tm);
+        var postTimezoneOffset = dt.getTimezoneOffset();
+        if(postTimezoneOffset != preTimezoneOffset){
+          dt.minutes += postTimezoneOffset - preTimezoneOffset;
+        }
+
+        return dt;
+      }
+    };
+
+    return dates;
+  })
+
   .config(function($routeProvider) {
     $routeProvider
       .when('/', {

@@ -43,7 +43,7 @@ exports.events = function(calendarId, callback) {
     //Request all calendars
     var timeMin = new Date();
     //TODO: Remove debug value
-    google.execute(client.calendar.events.list({calendarId: calendarId, timeMin: timeMin.toISOString(), timeMax: "2014-01-25T16:12:16.768Z"}),
+    google.execute(client.calendar.events.list({calendarId: calendarId, timeMin: timeMin.toISOString(), timeMax: "2014-02-25T16:12:16.768Z"}),
       function processCalendarRequest(err, cal) {
         if(err) { callback(err); return; }
         callback(null, cal);

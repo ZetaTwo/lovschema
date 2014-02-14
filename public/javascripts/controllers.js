@@ -25,9 +25,47 @@ lovschema
 
   }])
 
-  .controller('CalendarCtrl', ['$scope', 'User', function($scope, User) {
-    var users = User.query(function getUsers(data, getResponseHeaders) {
-      $scope.users = data;
+  .controller('CalendarCtrl', ['$scope', 'User', 'Dates', function($scope, User, Dates) {
+    $scope.days = {};
+    $scope.dates = [];
+    $scope.users = [];
+
+    User.query(function getUsers(data, getResponseHeaders) {
+      for(var i in data) {
+        var user = data[i];
+        $scope.users.push(user.username);
+
+        for(var j in user.calendar_data) {
+          var calendar = user.calendar_data[j];
+          for(var k in calendar.items) {
+            var event = calendar.items[k];
+            if(!event.hasOwnProperty('start')) {continue;}
+
+            var start_date = Dates.round(new Date(event.start));
+            if(!(start_date.valueOf() in $scope.days)) {
+              $scope.days[start_date.valueOf()] = {date: start_date, users: {}};
+            }
+
+            if(!(user.username in $scope.days[start_date.valueOf()].users)) {
+              $scope.days[start_date.valueOf()].users[user.username] = [];
+            }
+
+            $scope.days[start_date.valueOf()].users[user.username].push(event);
+          }
+        }
+      }
+
+      //Take all days and create sorted key list
+      for (date in $scope.days) {
+        if ($scope.days.hasOwnProperty(date)) {
+          $scope.dates.push(parseInt(date));
+        }
+      }
+      $scope.dates.sort();
+      $scope.users.sort();
+
+      console.log($scope.days);
+      console.log($scope.dates);
     });
   }])
 

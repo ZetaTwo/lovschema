@@ -16,10 +16,16 @@ var parseCalendar = function(calendarId, callback) {
 
       //Create all events
       cal.items.forEach(function parseCalendarEvent(item) {
+        var start, end;
+        //Get dateTime if available otherwise just date
+        if(item.start) { start = (item.start.dateTime)?item.start.dateTime:item.start.date; }
+        if(item.end) { end = (item.end.dateTime)?item.end.dateTime:item.end.date; }
+
+        //Add item to result
         result.items.push({
           name: item.summary,
-          start: item.start.dateTime,
-          end: item.end.dateTime,
+          start: start,
+          end: end,
           busy: (item.transparency !== 'transparent'),
           private: (item.summary === undefined)
         })
