@@ -47,4 +47,11 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
           return ('0' + input.getHours()).slice(-2) + ":" + ('0' + input.getMinutes()).slice(-2);
         }
       };
+    })
+    .filter('lsEndday', function() {
+      return function(input) {
+        input = new Date(input);
+
+        return (input.getHours() == 23);
+      };
     });

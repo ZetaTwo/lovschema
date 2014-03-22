@@ -11,6 +11,10 @@
     font-size: 0.75rem;
 }
 
+#lovschemaCalendar tr.endday {
+    border-bottom: 1px solid #000000;
+}
+
 #lovschemaCalendar tr td:first-child {
     text-align: right;
     padding: 0 10px;

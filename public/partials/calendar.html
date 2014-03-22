@@ -6,9 +6,9 @@
     <tr>
       <th>Tid</th><th x-ng-repeat="user in events.users">{{user}}</th>
     </tr>
-    <tr x-ng-hide="hour.datetime | lsMorning" x-ng-repeat="hour in events.events">
+    <tr x-ng-class="{endday: (hour.datetime | lsEndday)}" x-ng-if="!(hour.datetime | lsMorning)" x-ng-repeat="hour in events.events">
       <td>{{ hour.datetime | lsDate }}</td>
-      <td x-ng-class="{free: hour.free}" x-ng-repeat="user in events.users">
+      <td x-ng-class="{free: hour.free }" x-ng-repeat="user in events.users">
         <div x-ng-if="hour.users[user]">
           <div>
             <div x-ng-repeat="event in hour.users[user]" x-ng-if="event.name">{{ event.name }}</div>
