@@ -7,7 +7,15 @@ var parseCalendar = function(calendarId, callback) {
   //Get events from Google
   calendar.events(calendarId,
     function parseCalendarEvents(err, cal) {
-      if(err) { callback(err); return }
+      if(err) {
+        if(err.code == 404) {
+          console.error('Calendar: ' + calendarId + ' not found.');
+          return callback(null, null);
+        } else {
+          callback(err);
+        }
+        return;
+      }
 
       //Create calendar
       var result = {
@@ -20,8 +28,8 @@ var parseCalendar = function(calendarId, callback) {
         var start, end;
 
         //Get dateTime if available otherwise just date
-        if(item.start) { start = (item.start.dateTime)?item.start.dateTime:item.start.date; }
-        if(item.end) { end = (item.end.dateTime)?item.end.dateTime:item.end.date; }
+        if(item.start) { start = (item.start.dateTime) ? item.start.dateTime : item.start.date; }
+        if(item.end) { end = (item.end.dateTime) ? item.end.dateTime : item.end.date; }
 
         //Round events to nearest hour but make sure it is at least 1 hour
         start = moment(start).add('minutes', 30).startOf('hour');
@@ -50,7 +58,7 @@ var getUsers = function() {
   database.User.find({},
     { username: 1, calendar_ids: 1, calendar_data: 1},
     function parseUsers(err, users) {
-      if(err) { console.log(err); return; }
+      if(err) { console.trace(err); return; }
 
       var user_tasks = [];
       //Create user tasks
@@ -66,10 +74,18 @@ var getUsers = function() {
 
           //Run calendar tasks
           async.parallel(cal_tasks, function addCalendars(err, calendars) {
+            if(err) { console.trace(err); return; }
+
+            user.calendar_data = [];
+            for(var i = 0; i < calendars.length; i++) {
+              if(calendars[i] !== null) {
+                user.calendar_data.push(calendars[i]);
+              }
+            }
+
             //And save the results
-            user.calendar_data = calendars;
-            user.save(function savedUsed(err, user) {
-              if(err) { console.log(err); return; }
+            user.save(function savedUser(err, user) {
+              if(err) { console.trace(err); return; }
 
               console.log('Updated user: ' + user.username);
               callback(null, user);
@@ -80,9 +96,10 @@ var getUsers = function() {
 
       //Run user tasks
       async.parallel(user_tasks, function finishedUsers(err, users) {
-        if(err) { console.log(err); return; }
+        if(err) { console.trace(err); return; }
 
-        console.log('Finished updating users');
+        console.log('Finished updating ' + users.length + ' users');
+
         database.Disconnect();
       });
     }
