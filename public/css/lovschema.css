@@ -1,0 +1,47 @@
+.top-bar input[type="text"], .top-bar input[type="password"], .top-bar .button {
+    font-size: 0.77778rem;
+    position: relative;
+    top: 7px;
+}
+
+.top-bar input[type="text"], .top-bar input[type="password"] {
+    height: auto;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    font-size: 0.75rem;
+}
+
+#lovschemaCalendar tr td:first-child {
+    text-align: right;
+    padding: 0 10px;
+}
+
+#lovschemaCalendar tr td {
+    text-align: right;
+    padding: 0;
+}
+
+#lovschemaCalendar tr td > div {
+    height: 20px;
+    width: 100%;
+    position: relative;
+    background-color: #cc0000;
+}
+
+#lovschemaCalendar tr td > div > div {
+    position: absolute;
+    width: 200px;
+    text-align: left;
+    padding: 5px;
+    background-color: #74bfdd;
+    visibility: hidden;
+    z-index: 100;
+}
+
+#lovschemaCalendar tr td:hover > div > div {
+    visibility: visible;
+}
+
+#lovschemaCalendar td.free {
+    background-color: #43ac6a;
+}

@@ -1,15 +1,21 @@
 {
-  "name": "Lovschema",
+  "name": "lovschema",
   "version": "3.0.0",
   "private": true,
   "scripts": {
     "start": "node webapp.js"
   },
   "dependencies": {
-    "express": "*",
-    "googleapis": "*",
-    "mongoose": "*",
-    "bcrypt-nodejs": "*",
-    "async": "*"
+    "express": "~3.4.8",
+    "static-favicon": "~1.0.2",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4",
+    "googleapis": "~0.6.1",
+    "mongoose": "~3.8.8",
+    "async": "~0.2.10",
+    "bcrypt": "~0.7.7",
+    "moment": "^2.5.1"
   }
 }

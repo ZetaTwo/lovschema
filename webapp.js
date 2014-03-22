@@ -1,39 +1,55 @@
-/**
- * Module dependencies.
- */
-
 var express = require('express');
-var routes = require('./routes');
-var http = require('http');
+//var http = require('http');
 var path = require('path');
-var mongoose = require('mongoose');
+var routes = require('./routes');
+var favicon = require('static-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 3000);
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'html');
-app.use(express.favicon());
-app.use(express.logger('dev'));
+app.set('view engine', 'jade');
 
-app.use(express.json());
-app.use(express.urlencoded());
-
-app.use(express.cookieParser());
-app.use(express.cookieSession({secret: "7EqdDP5ZfgeM776"}));
-app.use(express.methodOverride());
-app.use(app.router);
+app.use(favicon());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(express.session({secret: 'H3lg1WJGwUjtIN6c5Ags'}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(app.router);
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+/// catch 404 and forwarding to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res) {
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-//Not used
-app.get('/oauth2/request', routes.oauth2.request);
-app.get('/oauth2/callback', routes.oauth2.callback);
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res) {
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
 //Calendar
 app.get('/calendar', routes.calendar.list);
@@ -46,6 +62,7 @@ app.get('/user', routes.user.list);
 app.post('/user', routes.user.create);
 app.put('/user/:username', routes.user.update);
 app.get('/user/:username', routes.user.get);
+app.get('/user/:username/events', routes.user.events);
 
 //Session
 app.get('/session', routes.session.get);
@@ -60,6 +77,5 @@ process.on('SIGINT', function() {
   });
 });
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+
+module.exports = app;

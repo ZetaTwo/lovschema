@@ -1,12 +1,10 @@
 var database = require('../models')
-  , error = require('../library/error.js').error
-  , bcrypt = require('bcrypt-nodejs');
+  , error = require('../library/error').error
+  , bcrypt = require('bcrypt');
 
 exports.get = function(req, res) {
-  console.log(req.session);
-
   if(!req.session || !req.session.username) {
-    res.json(404, { error: "No session found." }); return;
+    return error(res, 404, "No session found."); return;
   }
 
   res.json({ username: req.session.username });
@@ -15,15 +13,14 @@ exports.get = function(req, res) {
 exports.create = function(req, res) {
   //TODO: Sanitize input
   if(!req.body.username || !req.body.password) {
-    res.json(400, { error: "Username or password not specified."});
-    return;
+    return error(res, 400, "Username or password not specified.");
   }
 
   database.User.findOne({username: req.body.username},
     function login(err, user) {
       //If there are errors or we don't find the user, abort
-      if(err) { res.json(404, {error: err}); return; }
-      if(!user) { res.json(404, {error: "User not found"}); return; }
+      if(err) { return error(res, 404, err); }
+      if(!user) { return error(res, 404, "User not found"); }
 
       //Compare password hashes
       bcrypt.compare(req.body.password, user.password, function checkPassword(err, result) {
@@ -35,7 +32,7 @@ exports.create = function(req, res) {
           res.json({ username: user.username });
         } else {
           req.session = null;
-          res.json(404, { error: "Incorrect username or password."});
+          return error(res, 404, "Incorrect username or password.");
         }
       });
     }

@@ -10,13 +10,13 @@
           <input type="text" x-ng-model="current_calendar" name="edit_calendar" placeholder="Google Calendar ID">
         </div>
         <div class="small-2 columns">
-          <a x-ng-href="" x-ng-click="add_calendar()" class="button postfix">Add</a>
+          <a x-ng-href="" x-ng-click="add_calendar()" class="button postfix" x-ng-enable="user.username">Add</a>
         </div>
       </div>
     </div>
     <div class="large-6 medium-6 small-12 columns">
-      <div class="row" x-ng-repeat="cal in calendars">
-        <div class="small-10 columns">{{cal.id}}</div>
+      <div class="row" x-ng-repeat="cal in user.calendar_ids">
+        <div class="small-10 columns">{{cal}}</div>
         <div class="small-2 columns"><a href class="button tiny" x-ng-click="remove_calendar(cal)">X</a></div>
       </div>
     </div>
@@ -24,20 +24,24 @@
 </form>
 
 <h2>Change password</h2>
-<form method="post">
+<form method="post" x-ng-submit="update_password()">
   <div class="row">
-    <div class="large-6 medium-6 small-12 columns">
-      <label>New password</label>
-      <input type="text" name="edit_password">
+    <div class="large-4 medium-4 small-12 columns">
+      <label for="edit_password_old">Old password</label>
+      <input type="password" id="edit_password_old" name="edit_password_old" x-ng-model="old_password">
     </div>
-    <div class="large-6 medium-6 small-12 columns">
-      <label>Confirm new password</label>
-      <input type="password" name="edit_password2">
+    <div class="large-4 medium-4 small-12 columns">
+      <label for="edit_password_new">New password</label>
+      <input type="password" id="edit_password_new" name="edit_password_new" x-ng-model="new_password">
+    </div>
+    <div class="large-4 medium-4 small-12 columns">
+      <label for="edit_password_new2">Confirm new password</label>
+      <input type="password" id="edit_password_new2" name="edit_password_new" x-ng-model="new_password2">
     </div>
   </div>
   <div class="row">
     <div class="large-12 columns">
-      <button>Change password</button>
+      <button x-ng-enable="user.username">Change password</button>
     </div>
   </div>
 </form>

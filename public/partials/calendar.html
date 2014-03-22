@@ -2,9 +2,19 @@
   <div class="large-12 columns"><h1>Kalender</h1></div>
 </div>
 <div class="row">
-  <div class="large-12 columns" x-ng-repeat="date in dates">
-    <div>{{days[date].date}}</div>
-    <div x-ng-repeat="user in users">{{days[date].users[user]}}</div>
-
-  </div>
+  <table id="lovschemaCalendar">
+    <tr>
+      <th>Tid</th><th x-ng-repeat="user in events.users">{{user}}</th>
+    </tr>
+    <tr x-ng-hide="hour.datetime | lsMorning" x-ng-repeat="hour in events.events">
+      <td>{{ hour.datetime | lsDate }}</td>
+      <td x-ng-class="{free: hour.free}" x-ng-repeat="user in events.users">
+        <div x-ng-if="hour.users[user]">
+          <div>
+            <div x-ng-repeat="event in hour.users[user]" x-ng-if="event.name">{{ event.name }}</div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>

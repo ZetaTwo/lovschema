@@ -96,9 +96,9 @@
 
       form.removeAttr('data-invalid');
 
-      if (is_ajax) return false;
+      return !is_ajax;
 
-      return true;
+
     },
 
     parse_patterns : function (els) {

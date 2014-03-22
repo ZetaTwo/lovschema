@@ -7,13 +7,13 @@
   </div>
   <div class="row">
     <div class="large-6 medium-6 small-12 columns">
-      <label x-ng-class="{error: register_form.register_username.$invalid && submitted }">Username</label>
-      <input type="text" name="register_username" x-ng-model="username" required="required" x-ng-minlength="3" x-ng-maxlength="20" x-ng-trim="false" x-ng-class="{error: register_form.register_username.$invalid && submitted}">
+      <label for="register_username" x-ng-class="{error: register_form.register_username.$invalid && submitted }">Username</label>
+      <input type="text" id="register_username" name="register_username" x-ng-model="username" required="required" x-ng-minlength="3" x-ng-maxlength="20" x-ng-trim="false" x-ng-class="{error: register_form.register_username.$invalid && submitted}">
       <small class="error" x-ng-show="register_form.register_username.$invalid && submitted">Invalid entry</small>
     </div>
     <div class="large-6 medium-6 small-12 columns">
-      <label x-ng-class="{error: register_form.register_password.$invalid && submitted}">Password</label>
-      <input type="password" name="register_password" x-ng-model="password" required="required" x-ng-minlength="6" x-ng-maxlength="64" x-ng-trim="false" x-ng-class="{error: register_form.register_password.$invalid && submitted}">
+      <label for="register_password" x-ng-class="{error: register_form.register_password.$invalid && submitted}">Password</label>
+      <input type="password" id="register_password" name="register_password" x-ng-model="password" required="required" x-ng-minlength="6" x-ng-maxlength="64" x-ng-trim="false" x-ng-class="{error: register_form.register_password.$invalid && submitted}">
       <small class="error" x-ng-show="register_form.register_password.$invalid && submitted">Invalid entry</small>
     </div>
   </div>

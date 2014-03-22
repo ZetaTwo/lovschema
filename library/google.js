@@ -1,7 +1,7 @@
 var googleapis = require('googleapis')
   , config = require('../config.js').google;
 
-var authclient = new googleapis.auth.OAuth2Client(config.CLIENT_ID, config.CLIENT_SECRET, config.REDIRECT_URL);
+var authclient = new googleapis.auth.OAuth2(config.CLIENT_ID, config.CLIENT_SECRET, config.REDIRECT_URL);
 
 exports.calendar = function(executor) {
   googleapis
@@ -23,7 +23,7 @@ exports.execute = function(google_request, executor) {
 
 exports.login = function(tokens) {
   authclient.credentials = tokens;
-}
+};
 
 exports.oauth2Client = authclient;
 exports.api = googleapis;

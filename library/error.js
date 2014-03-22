@@ -1,4 +1,7 @@
-exports.error = function(res, err) {
-  res.json({ error: err });
-  return;
-}
+exports.error = function(res, code, err) {
+  if(typeof err == undefined) {
+    err = code;
+    code = 500;
+  }
+  res.json(code, { error: err });
+};

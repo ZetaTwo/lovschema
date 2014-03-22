@@ -4,17 +4,23 @@
     <meta charset="utf-8">
     <title>Lovschema</title>
 
-    <link rel="stylesheet" href="/stylesheets/normalize.css">
-    <link rel="stylesheet" href="/stylesheets/foundation.min.css">
-    <link rel="stylesheet" href="/stylesheets/lovschema.css">
+    <link rel="stylesheet" href="/css/vendor/normalize.css">
+    <link rel="stylesheet" href="/css/vendor/foundation.min.css">
+    <link rel="stylesheet" href="/css/lovschema.css">
 
-    <script src="/javascripts/vendor/modernizr.js"></script>
+    <script src="/js/vendor/modernizr.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-resource.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-cookies.min.js"></script>
-    <script src="/javascripts/lovschema.js"></script>
-    <script src="/javascripts/controllers.js"></script>
+
+    <script src="/js/lovschema/LovschemaApp.js"></script>
+    <script src="/js/lovschema/LovschemaResources.js"></script>
+    <script src="/js/lovschema/LovschemaServices.js"></script>
+    <script src="/js/lovschema/RegisterCtrl.js"></script>
+    <script src="/js/lovschema/LoginCtrl.js"></script>
+    <script src="/js/lovschema/UserCtrl.js"></script>
+    <script src="/js/lovschema/CalendarCtrl.js"></script>
   </head>
   <body>
 
@@ -44,7 +50,7 @@
                 <input type="password" placeholder="Password" x-ng-model="login_password">
               </div>
               <div class="large-2 small-2 columns">
-                <button type="submit" href="#" class="alert button expand">Login</button>
+                <button type="submit" class="alert button expand">Login</button>
               </div>
             </div>
           </form>
@@ -61,7 +67,7 @@
   </div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="/javascripts/foundation.min.js"></script>
+  <script src="/js/vendor/foundation.min.js"></script>
   <script> $(document).foundation(); </script>
   </body>
 </html>
