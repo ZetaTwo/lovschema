@@ -60,7 +60,7 @@ app.get('/calendar/:calendarId/events/:eventId', routes.calendar.event);
 
 //User
 app.get('/user', routes.user.list);
-app.post('/user', routes.user.create);
+app.post('/user/:username', routes.user.create);
 app.put('/user/:username', routes.user.update);
 app.get('/user/:username', routes.user.get);
 app.get('/user/:username/events', routes.user.events);
