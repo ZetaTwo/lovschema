@@ -54,7 +54,37 @@ var parseCalendar = function(calendarId, callback) {
   );
 };
 
-var getUsers = function() {
+var parseUser = function(user, callback) {
+  //Construct the calendar parsing tasks
+  var cal_tasks = [];
+  user.calendar_ids.forEach(function(calendarId) {
+    cal_tasks.push(function startParseCalendar(callback) {
+      parseCalendar(calendarId, callback);
+    });
+  });
+
+  //Run calendar tasks
+  async.parallel(cal_tasks, function addCalendars(err, calendars) {
+    if(err) { console.trace(err); return; }
+
+    user.calendar_data = [];
+    for(var i = 0; i < calendars.length; i++) {
+      if(calendars[i] !== null) {
+        user.calendar_data.push(calendars[i]);
+      }
+    }
+
+    //And save the results
+    user.save(function savedUser(err, user) {
+      if(err) { console.trace(err); return; }
+
+      console.log('Updated user: ' + user.username);
+      callback(null, user);
+    });
+  });
+};
+
+var getUsers = function(callback) {
   database.User.find({},
     { username: 1, calendar_ids: 1, calendar_data: 1},
     function parseUsers(err, users) {
@@ -62,49 +92,22 @@ var getUsers = function() {
 
       var user_tasks = [];
       //Create user tasks
-      users.forEach(function(user) {
-        user_tasks.push(function parseUser(callback) {
-          //Construct the calendar parsing tasks
-          var cal_tasks = [];
-          user.calendar_ids.forEach(function(calendarId) {
-            cal_tasks.push(function getCalendar(callback) {
-              parseCalendar(calendarId, callback);
-            });
-          });
-
-          //Run calendar tasks
-          async.parallel(cal_tasks, function addCalendars(err, calendars) {
-            if(err) { console.trace(err); return; }
-
-            user.calendar_data = [];
-            for(var i = 0; i < calendars.length; i++) {
-              if(calendars[i] !== null) {
-                user.calendar_data.push(calendars[i]);
-              }
-            }
-
-            //And save the results
-            user.save(function savedUser(err, user) {
-              if(err) { console.trace(err); return; }
-
-              console.log('Updated user: ' + user.username);
-              callback(null, user);
-            });
-          });
+      users.forEach(function startParseUser(user) {
+        user_tasks.push(function(callback) {
+          parseUser(user, callback);
         });
       });
 
       //Run user tasks
-      async.parallel(user_tasks, function finishedUsers(err, users) {
-        if(err) { console.trace(err); return; }
-
-        console.log('Finished updating ' + users.length + ' users');
-
-        database.Disconnect();
-      });
+      async.parallel(user_tasks, callback);
     }
   );
 };
 
 //Start the worker
-getUsers();
+exports.updateCalendars = function() {
+  getUsers(function finishedUsers(err, users) {
+    if(err) { console.trace(err); return; }
+    console.log('Finished updating ' + users.length + ' users');
+  });
+}

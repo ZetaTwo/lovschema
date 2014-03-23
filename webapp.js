@@ -1,12 +1,14 @@
-var express = require('express');
+var express = require('express')
+  , path = require('path')
+  , routes = require('./routes')
+  , favicon = require('static-favicon')
+  , logger = require('morgan')
+  , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser')
+  , mongoose = require('mongoose')
+  , worker = require('./worker')
+  , debug = require('debug')('lovschema');
 //var http = require('http');
-var path = require('path');
-var routes = require('./routes');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 
 var app = express();
 
@@ -77,6 +79,13 @@ process.on('SIGINT', function() {
     process.exit(0);
   });
 });
+
+//Update calendars every 15 minutes
+worker.updateCalendars(); //Initial update
+setInterval(function runWorker() {
+  debug('Spawning worker child process');
+  worker.updateCalendars();
+}, 1000*60*15);
 
 
 module.exports = app;
