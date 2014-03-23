@@ -41,7 +41,7 @@ exports.list = function(req, res) {
             var start_index = days[moment(event.start)];
             var end_index = days[moment(event.end)];
 
-            for(var x = start_index; x <= end_index; x++) {
+            for(var x = start_index; x < end_index; x++) {
               if(!result.events[x].hasOwnProperty('users')) {
                 result.events[x].users = {};
                 result.events[x].free = false;
