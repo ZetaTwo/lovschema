@@ -27,6 +27,9 @@ var parseCalendar = function(calendarId, callback) {
       cal.items.forEach(function parseCalendarEvent(item) {
         var start, end;
 
+        //Only count current events
+        if(item.status == 'cancelled') { return; }
+
         //Get dateTime if available otherwise just date
         if(item.start) { start = (item.start.dateTime) ? item.start.dateTime : item.start.date; }
         if(item.end) { end = (item.end.dateTime) ? item.end.dateTime : item.end.date; }

@@ -1,4 +1,5 @@
-var google = require('./google.js');
+var google = require('./google.js')
+  , moment = require('moment');
 
 exports.list = function(oauth2tokens, callback) {
   google.login(oauth2tokens);
@@ -40,10 +41,11 @@ exports.events = function(calendarId, callback) {
   google.calendar(function doCalendarRequest(err, client) {
     if(err) { callback(err); return; }
 
-    //Request all calendars
-    var timeMin = new Date();
-    //TODO: Remove debug value
-    google.execute(client.calendar.events.list({calendarId: calendarId, timeMin: timeMin.toISOString(), timeMax: "2014-04-25T16:12:16.768Z"}),
+    //Request all calendars from today and one month forward
+    var timeMin = moment().startOf('day');
+    var timeMax = moment().add('month', 1).startOf('day');
+
+    google.execute(client.calendar.events.list({calendarId: calendarId, timeMin: timeMin.toISOString(), timeMax: timeMax.toISOString() }),
       function processCalendarRequest(err, cal) {
         if(err) { callback(err); return; }
         callback(null, cal);
