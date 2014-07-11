@@ -11,11 +11,15 @@
     "morgan": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
     "googleapis": "~0.6.1",
     "mongoose": "~3.8.8",
     "async": "~0.2.10",
     "bcrypt": "~0.7.7",
     "moment": "^2.5.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "debug": "~0.7.4",
+    "grunt-bowercopy": "^1.1.0"
   }
 }
