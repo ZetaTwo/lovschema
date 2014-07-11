@@ -22,13 +22,3 @@ build
 .grunt
 
 node_modules
-
-public/js/vendor/
-public/css/vendor/
-public/js/jquery.qtip.*
-public/js/foundation.*
-public/js/jquery.stickytableheaders.*
-
-public/js/lovschema.*
-public/css/jquery.qtip.*
-public/css/lovschema.min.css
