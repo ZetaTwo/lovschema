@@ -112,26 +112,30 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
             events = scope.$eval(attrs.lsQtipMouse);
             content = "";
             for (var i = 0; i < events.length; i++) {
-              content += events[i].name + "<br>\n";
+              if(events[i].name) {
+                content += events[i].name + "<br>\n";
+              }
             }
 
-            $(element).qtip({
-              content: {
-                text: content
-              },
-              show: {
-                effect: false,
-                solo: true
-              },
-              hide: {
-                effect: false,
-                delay: 100
-              },
-              position: {
-                target: 'mouse', // Track the mouse as the positioning target
-                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
-              }
-            });
+            if(content !== "") {
+              $(element).qtip({
+                content: {
+                  text: content
+                },
+                show: {
+                  effect: false,
+                  solo: true
+                },
+                hide: {
+                  effect: false,
+                  delay: 100
+                },
+                position: {
+                  target: 'mouse', // Track the mouse as the positioning target
+                  adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                }
+              });
+            }
           }
         }
       }
