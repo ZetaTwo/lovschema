@@ -60,4 +60,13 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
 
         return (input.getHours() == 23);
       };
+    })
+    .directive("lsStickyTable", function() {
+      return {
+        link: {
+          post: function(scope, element) {
+            $(element).stickyTableHeaders({fixedOffset: $('#topbar')});
+          }
+        }
+      }
     });

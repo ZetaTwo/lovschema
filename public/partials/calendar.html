@@ -2,10 +2,13 @@
   <div class="large-12 columns"><h1>Kalender</h1></div>
 </div>
 <div class="row">
-  <table id="lovschemaCalendar">
+  <table id="lovschemaCalendar" ls-sticky-table>
+    <thead>
     <tr>
       <th>Dag</th><th>Tid</th><th x-ng-repeat="user in events.users">{{user}}</th>
     </tr>
+    </thead>
+    <tbody>
     <tr x-ng-class="{endday: (hour.datetime | lsEndday)}" x-ng-if="!(hour.datetime | lsMorning)" x-ng-repeat="hour in events.events">
       <td>{{ hour.datetime | lsDate }}</td>
       <td>{{ hour.datetime | lsTime }}</td>
@@ -17,5 +20,11 @@
         </div>
       </td>
     </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <th>Dag</th><th>Tid</th><th x-ng-repeat="user in events.users">{{user}}</th>
+    </tr>
+    </tfoot>
   </table>
 </div>
