@@ -9,7 +9,7 @@ lovschema.controller('UserCtrl', ['$scope', '$location', 'Login', 'User',
     });
 
     $scope.user = User.get({ username: Login.session.username }, function getUser(data) {
-    })
+    });
 
     $scope.add_calendar = function() {
       var new_id = $scope.current_calendar;
