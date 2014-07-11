@@ -53,7 +53,8 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         files: {
-          'public/css/vendor/foundation.min.css': ['public/css/vendor/foundation.css']
+          'public/css/vendor/foundation.min.css': ['public/css/vendor/foundation.css'],
+          'public/css/lovschema.min.css': ['public/css/lovschema.css']
         }
       }
     }
@@ -62,5 +63,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bowercopy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.registerTask('default', ['bowercopy']);
+  grunt.registerTask('default', ['bowercopy', 'uglify', 'cssmin']);
+  grunt.registerTask('compress', ['uglify', 'cssmin']);
 };
