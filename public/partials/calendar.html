@@ -6,7 +6,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr x-ng-class="{endday: (hour.datetime | lsEndday)}" x-ng-if="!(hour.datetime | lsMorning)" x-ng-repeat="hour in events.events">
+    <tr class="weekrow" x-ng-repeat-start="hour in events.events" x-ng-if="hour.datetime | lsNewWeek"><th colspan="{{2+events.users.length}}">{{ hour.datetime | lsWeek }}</th></tr>
+    <tr class="monthrow" x-ng-if="hour.datetime | lsNewMonth"><th colspan="{{2+events.users.length}}">{{ hour.datetime | lsMonth }}</th></tr>
+    <tr x-ng-class="{endday: (hour.datetime | lsEndDay)}" x-ng-if="!(hour.datetime | lsMorning)" x-ng-repeat-end>
       <td>{{ hour.datetime | lsDate }}</td>
       <td>{{ hour.datetime | lsTime }}</td>
       <td x-ng-class="{free: hour.free }" x-ng-repeat="user in events.users">

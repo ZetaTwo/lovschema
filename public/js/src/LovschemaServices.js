@@ -54,11 +54,44 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
         return ('0' + input.getHours()).slice(-2) + ":" + ('0' + input.getMinutes()).slice(-2);
       };
     })
-    .filter('lsEndday', function() {
+    .filter('lsEndDay', function() {
       return function(input) {
         input = new Date(input);
 
         return (input.getHours() == 23);
+      };
+    })
+    .filter('lsNewWeek', function() {
+      return function(input) {
+        input = new Date(input);
+
+        return (input.getDay() == 1 && input.getHours() == 0);
+      };
+    })
+    .filter('lsNewMonth', function() {
+      return function(input) {
+        input = new Date(input);
+
+        return (input.getDate() == 1 && input.getHours() == 0);
+      };
+    })
+    .filter('lsMonth', function() {
+      return function(input) {
+        var months = ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'];
+        input = new Date(input);
+
+        return months[input.getMonth()];
+      };
+    })
+    .filter('lsWeek', function() {
+      return function(input) {
+        input = new Date(input);
+
+        input.setHours(0,0,0);
+        input.setDate(input.getDate() + 4 - (input.getDay()||7));
+        var yearStart = new Date(input.getFullYear(),0,1);
+        var weekNo = Math.ceil(( ( (input - yearStart) / 86400000) + 1)/7);
+        return 'Vecka ' + weekNo;
       };
     })
     .directive("lsStickyTable", function() {

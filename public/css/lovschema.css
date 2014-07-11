@@ -68,3 +68,15 @@
 #lovschemaCalendar td.free {
     background-color: #43ac6a;
 }
+
+#lovschemaCalendar .weekrow {
+    background-color: #007295;
+    border-bottom: 1px solid #000000;
+}
+#lovschemaCalendar .weekrow th { color: #ffffff; }
+
+#lovschemaCalendar .monthrow {
+    background-color: #555555;
+    border-bottom: 1px solid #000000;
+}
+#lovschemaCalendar .monthrow th { color: #ffffff; }
