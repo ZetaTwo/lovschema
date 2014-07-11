@@ -15,17 +15,23 @@
     border-bottom: 1px solid #000000;
 }
 
+
+#lovschemaCalendar tr th {
+    text-align: center;
+}
+
+#lovschemaCalendar tr td {
+    width: 150px;
+    padding: 0;
+    border-left: 2px solid #000000;
+}
+
 #lovschemaCalendar tr td:first-child,
 #lovschemaCalendar tr td:nth-child(2){
     text-align: right;
     padding: 0 10px;
     border-left: 0;
-}
-
-#lovschemaCalendar tr td {
-    text-align: right;
-    padding: 0;
-    border-left: 2px solid #000000;
+    width: auto;
 }
 
 #lovschemaCalendar tr td > div {
