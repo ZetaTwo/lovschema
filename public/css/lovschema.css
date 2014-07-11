@@ -11,6 +11,10 @@
     font-size: 0.75rem;
 }
 
+#lovschemaCalendar {
+    margin: 0 auto;
+}
+
 #lovschemaCalendar tr.endday {
     border-bottom: 1px solid #000000;
 }
@@ -18,6 +22,7 @@
 
 #lovschemaCalendar tr th {
     text-align: center;
+    width: 150px;
 }
 
 #lovschemaCalendar tr td {
@@ -31,6 +36,11 @@
     text-align: right;
     padding: 0 10px;
     border-left: 0;
+    width: auto;
+}
+
+#lovschemaCalendar tr th:first-child,
+#lovschemaCalendar tr th:nth-child(2) {
     width: auto;
 }
 
