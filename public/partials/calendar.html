@@ -10,11 +10,7 @@
       <td>{{ hour.datetime | lsDate }}</td>
       <td>{{ hour.datetime | lsTime }}</td>
       <td x-ng-class="{free: hour.free }" x-ng-repeat="user in events.users">
-        <div x-ng-if="hour.users[user]">
-          <div>
-            <div x-ng-repeat="event in hour.users[user]" x-ng-if="event.name">{{ event.name }}</div>
-          </div>
-        </div>
+        <div x-ng-if="hour.users[user]" ls-qtip-mouse="hour.users[user]"></div>
       </td>
     </tr>
     </tbody>

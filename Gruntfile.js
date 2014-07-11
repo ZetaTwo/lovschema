@@ -29,6 +29,18 @@ module.exports = function(grunt) {
         files: {
           'jquery.stickytableheaders.min.js': 'StickyTableHeaders/js/jquery.stickytableheaders.min.js'
         }
+      },
+
+      qtip2: {
+        options: {
+          destPrefix: 'public'
+        },
+        files: {
+          'js/jquery.qtip.min.js': 'qtip2/jquery.qtip.min.js',
+          'js/jquery.qtip.min.map': 'qtip2/jquery.qtip.min.map',
+
+          'css/jquery.qtip.min.css': 'qtip2/jquery.qtip.min.css'
+        }
       }
     },
 

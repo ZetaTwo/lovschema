@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "StickyTableHeaders": "~0.1.11",
-    "foundation": "zurb/bower-foundation#~5.3.0"
+    "foundation": "zurb/bower-foundation#~5.3.0",
+    "qtip2": "~2.2.0"
   }
 }
