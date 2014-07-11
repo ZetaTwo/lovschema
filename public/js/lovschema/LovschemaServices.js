@@ -39,13 +39,19 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
     })
     .filter('lsDate', function() {
       return function(input) {
+        var days = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
         input = new Date(input);
 
         if(input.getHours() === 9) {
-          return ('0' + input.getDate()).slice(-2) + "/" + ('0' + (input.getMonth()+1)).slice(-2) + " " + ('0' + input.getHours()).slice(-2) + ":" + ('0' + input.getMinutes()).slice(-2);
-        } else {
-          return ('0' + input.getHours()).slice(-2) + ":" + ('0' + input.getMinutes()).slice(-2);
+          return days[input.getDay()] + ' ' + ('0' + input.getDate()).slice(-2) + "/" + ('0' + (input.getMonth()+1)).slice(-2);
         }
+      };
+    })
+    .filter('lsTime', function() {
+      return function(input) {
+        input = new Date(input);
+
+        return ('0' + input.getHours()).slice(-2) + ":" + ('0' + input.getMinutes()).slice(-2);
       };
     })
     .filter('lsEndday', function() {

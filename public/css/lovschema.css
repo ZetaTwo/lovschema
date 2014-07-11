@@ -15,7 +15,8 @@
     border-bottom: 1px solid #000000;
 }
 
-#lovschemaCalendar tr td:first-child {
+#lovschemaCalendar tr td:first-child,
+#lovschemaCalendar tr td:nth-child(2){
     text-align: right;
     padding: 0 10px;
 }
