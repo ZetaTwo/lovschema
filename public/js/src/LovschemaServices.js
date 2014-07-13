@@ -1,3 +1,4 @@
+var MORNING = 14;
 lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
     function( $rootScope, $cookies, Session ) {
       var loginService = {
@@ -34,7 +35,7 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
       return function(input) {
         input = new Date(input);
 
-        return (input.getHours() <= 8);
+        return (input.getHours() < MORNING);
       };
     })
     .filter('lsDate', function() {
@@ -42,7 +43,7 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
         var days = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
         input = new Date(input);
 
-        if(input.getHours() === 9) {
+        if(input.getHours() === MORNING) {
           return days[input.getDay()] + ' ' + ('0' + input.getDate()).slice(-2) + "/" + ('0' + (input.getMonth()+1)).slice(-2);
         }
       };
