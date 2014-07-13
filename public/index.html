@@ -31,8 +31,13 @@
     <section class="top-bar-section" x-ng-controller="LoginCtrl">
       <!-- Right Nav Section -->
       <ul class="right">
-        <li x-ng-show="loggedIn"><a x-ng-href="#user">Welcome {{username}}!</a></li>
-        <li x-ng-show="loggedIn"><a class="alert button expand" x-ng-click="logout()">Log out</a></li>
+        <li x-ng-show="loggedIn" class="has-dropdown">
+          <a>{{username}}</a>
+          <ul class="dropdown">
+            <li><a x-ng-href="#user">Settings</a></li>
+            <li><a x-ng-click="logout()">Log out</a></li>
+          </ul>
+        </li>
         <li x-ng-show="!loggedIn"><a x-ng-href="#register">Register</a></li>
         <li x-ng-show="!loggedIn" class="has-form">
           <form method="post" x-ng-submit="login()">
@@ -45,7 +50,7 @@
                 <input type="password" placeholder="Password" x-ng-model="login_password">
               </div>
               <div class="large-2 small-2 columns">
-                <button type="submit" class="alert button expand">Login</button>
+                <button type="submit" class="button expand">Login</button>
               </div>
             </div>
           </form>
