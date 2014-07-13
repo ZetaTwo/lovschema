@@ -38,7 +38,8 @@ lovschema.controller('UserCtrl', ['$scope', '$location', 'Login', 'User',
 
       if(old !== undefined && old !== '' &&
         new_pass !== undefined && new_pass !== '' &&
-        new_pass2 !== undefined && new_pass2 !== '') {
+        new_pass2 !== undefined && new_pass2 !== '' &&
+        new_pass === new_pass2) {
 
         $scope.user.old_password = old;
         $scope.user.password = new_pass;
@@ -46,9 +47,22 @@ lovschema.controller('UserCtrl', ['$scope', '$location', 'Login', 'User',
           $scope.old_password = '';
           $scope.new_password = '';
           $scope.new_password2 = '';
+          $scope.password_error = { message: "Settings saved", good: true };
+        }, function errorUser(data) {
+          $scope.password_error = { message: data.data.error, good: false };
         });
       } else {
-        //TODO: Password change input invalid
+        var message = "";
+        if(old === undefined || old === '') {
+          message += "Old password required.<br>\n";
+        }
+        if(new_pass === undefined || new_pass === '' ||
+          new_pass2 === undefined || new_pass2 === '') {
+          message += "New password required.<br>\n";
+        } else if(new_pass !== new_pass2) {
+          message += "New passwords must match.<br>\n";
+        }
+        $scope.password_error = { message: message, good: false };
       }
     };
   }]);

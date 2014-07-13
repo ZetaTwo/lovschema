@@ -13,7 +13,8 @@ lovschema.controller('RegisterCtrl', ['$scope', '$location', 'User', 'Login',
       $scope.submitted = true;
 
       //If not valid, return
-      if(!$scope.register_form.$valid) {
+      //console.log($scope.email_valid);
+      if(!$scope.register_form.$valid || !$scope.email_valid) {
         return false;
       }
 

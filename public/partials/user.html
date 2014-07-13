@@ -24,7 +24,7 @@
 </form>
 
 <h2>Change password</h2>
-<form method="post" x-ng-submit="update_password()">
+<form method="post" x-ng-submit="update_password()" ls-error="password_error">
   <div class="row">
     <div class="large-4 medium-4 small-12 columns">
       <label for="edit_password_old">Old password</label>
@@ -36,7 +36,7 @@
     </div>
     <div class="large-4 medium-4 small-12 columns">
       <label for="edit_password_new2">Confirm new password</label>
-      <input type="password" id="edit_password_new2" name="edit_password_new" x-ng-model="new_password2">
+      <input type="password" id="edit_password_new2" name="edit_password_new2" x-ng-model="new_password2">
     </div>
   </div>
   <div class="row">

@@ -1,6 +1,6 @@
 var database = require('../models')
   , moment = require('moment')
-  , error = require('../library/error').error
+  , error = require('../library/error').error;
 
 exports.list = function(req, res) {
   database.User.find({},
@@ -8,10 +8,11 @@ exports.list = function(req, res) {
     function getUsers(err, users) {
       if(err) { res.json(404, err); return; }
 
-      var result = { events: [], users: [] };
+      var result, i;
+      result = { events: [], users: [] };
 
-      for(var i = 0; i < users.length; i++) {
-        result.users.push(users[i].username);
+      for(i = 0; i < users.length; i++) {
+        result.users.push({username: users[i].username, display_name: users[i].display_name});
       }
 
       var days = {};
@@ -29,7 +30,7 @@ exports.list = function(req, res) {
       }
 
       //Insert all events
-      for(var i = 0; i < users.length; i++) {
+      for(i = 0; i < users.length; i++) {
         var user = users[i];
 
         for(var j = 0; j < user.calendar_data.length; j++) {

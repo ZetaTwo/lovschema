@@ -10,7 +10,6 @@ lovschema.factory( 'Resource', [ '$resource', function( $resource ) {
       var resource = $resource( url, params, methods );
 
       resource.prototype.$save = function(callback, error) {
-        console.log(this);
         if ( !this.id ) {
           return this.$create(callback, error);
         }

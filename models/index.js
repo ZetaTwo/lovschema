@@ -20,6 +20,7 @@ var Calendar = mongoose.model('Calendar', CalendarSchema);
 //User
 var UserSchema = {
   username: { type: String, index: { unique: true }, required: true },
+  display_name: { type: String, required: true },
   password: { type: String, required: true },
   calendar_ids: [String],
   calendar_data: [CalendarSchema]

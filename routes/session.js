@@ -4,10 +4,10 @@ var database = require('../models')
 
 exports.get = function(req, res) {
   if(!req.session || !req.session.username) {
-    return error(res, 404, "No session found."); return;
+    return error(res, 404, "No session found.");
   }
 
-  res.json({ username: req.session.username });
+  res.json({ username: req.session.username, display_name: req.session.display_name });
 };
 
 exports.create = function(req, res) {
@@ -15,8 +15,9 @@ exports.create = function(req, res) {
   if(!req.body.username || !req.body.password) {
     return error(res, 400, "Username or password not specified.");
   }
+  var username = req.body.username.toLowerCase();
 
-  database.User.findOne({username: req.body.username},
+  database.User.findOne({username: username},
     function login(err, user) {
       //If there are errors or we don't find the user, abort
       if(err) { return error(res, 404, err); }
@@ -29,7 +30,8 @@ exports.create = function(req, res) {
         //If everything matches, create the session.
         if(result) {
           req.session.username = user.username;
-          res.json({ username: user.username });
+          req.session.display_name = user.display_name;
+          res.json({ username: req.session.username, display_name: req.session.display_name });
         } else {
           req.session = null;
           return error(res, 404, "Incorrect username or password.");
@@ -40,6 +42,7 @@ exports.create = function(req, res) {
 };
 
 exports.destroy = function(req, res) {
+  req.session.destroy();
   req.session = null;
   res.json({ loggedout: true });
 };

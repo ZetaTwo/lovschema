@@ -41,6 +41,27 @@ module.exports = function(grunt) {
 
           'css/jquery.qtip.min.css': 'qtip2/jquery.qtip.min.css'
         }
+      },
+
+      toastr: {
+        options: {
+          destPrefix: 'public'
+        },
+        files: {
+          'js/toastr.min.js': 'toastr/toastr.min.js',
+          'js/toastr.min.js.map': 'toastr/toastr.min.js.map',
+
+          'css/toastr.min.css': 'toastr/toastr.min.css'
+        }
+      },
+
+      mailgun_validator: {
+        options: {
+          destPrefix: 'public/js'
+        },
+        files: {
+          'mailgun_validator.js': 'validator-demo/mailgun_validator.js'
+        }
       }
     },
 
@@ -53,11 +74,14 @@ module.exports = function(grunt) {
           'public/js/lovschema.js':
             ['public/js/src/LovschemaApp.js',
               'public/js/src/LovschemaResources.js',
-              'public/js/src/LovschemaServices.js',
+              'public/js/src/LovschemaFilters.js',
+              'public/js/src/LovschemaDirectives.js',
               'public/js/src/RegisterCtrl.js',
               'public/js/src/LoginCtrl.js',
               'public/js/src/UserCtrl.js',
-              'public/js/src/CalendarCtrl.js']
+              'public/js/src/CalendarCtrl.js'],
+
+          'public/js/mailgun_validator.min.js': 'public/js/mailgun_validator.js'
         }
       }
     },

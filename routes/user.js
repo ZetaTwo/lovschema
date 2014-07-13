@@ -13,7 +13,12 @@ exports.list = function(req, res) {
 };
 
 exports.get = function(req, res) {
-  database.User.findOne({username: req.params.username},
+  if(!req.params.username) {
+    return error(res, 400, "Username not specified.");
+  }
+  var username = req.params.username.toLowerCase();
+
+  database.User.findOne({username: username},
     { '__v': 0, '_id': 0, 'calendar_data': 0, 'password': 0 },
     function getUsers(err, user) {
       if(err) { return error(res, 404, err); }
@@ -23,7 +28,12 @@ exports.get = function(req, res) {
 };
 
 exports.events = function(req, res) {
-  database.User.findOne({username: req.params.username},
+  if(!req.params.username) {
+    return error(res, 400, "Username not specified.");
+  }
+  var username = req.params.username.toLowerCase();
+
+  database.User.findOne({username: username},
     { '__v': 0, '_id': 0, 'calendar_data._id': 0, 'calendar_data.items._id': 0, 'password': 0 },
     function getUsers(err, user) {
       if(err) { return error(res, 404, err); }
@@ -37,6 +47,7 @@ exports.create = function(req, res) {
   if(!req.body.username || !req.body.password) {
     return error(res, 400, "Username or password not specified.");
   }
+  var username = req.body.username.toLowerCase();
 
   //Hash password
   bcrypt.hash(req.body.password, 10, function createUser(err, hash) {
@@ -44,7 +55,8 @@ exports.create = function(req, res) {
 
     //Create user
     var user = new database.User({
-      username: req.body.username,
+      username: username,
+      display_name: req.body.username,
       password: hash
     });
 
@@ -72,14 +84,19 @@ var save_updated_user = function(res) {
     delete user_saved.__v;
     res.json(user_saved);
   }
-}
+};
 
 exports.update = function(req, res) {
-  if(req.session.username !== req.params.username) {
+  if(!req.body.username) {
+    return error(res, 400, "Username not specified.");
+  }
+
+  var username = req.body.username.toLowerCase();
+  if(req.session.username !== username) {
     return error(res, 403, "Access not allowed");
   }
 
-  database.User.findOne({username: req.params.username},
+  database.User.findOne({username: username},
     { 'calendar_data': 0 },
     function getUsers(err, user) {
       if(err) { return error(404, err); }
@@ -88,7 +105,9 @@ exports.update = function(req, res) {
 
       if(req.body.old_password && req.body.password) {
         bcrypt.compare(req.body.old_password, user.password, function checkPassword(err, result) {
-          if(err) { return error(res, 403, "Incorrect password"); }
+          if(err) { return error(res, err); }
+          if(!result) { return error(res, 403, "Incorrect password"); }
+
           bcrypt.hash(req.body.password, 10, function createUser(err, hash) {
             if(err) { return error(res, 500, err); }
 

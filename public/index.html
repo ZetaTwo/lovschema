@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/vendor/normalize.css">
     <link rel="stylesheet" href="/css/vendor/foundation.min.css">
     <link rel="stylesheet" href="/css/jquery.qtip.min.css">
+    <link rel="stylesheet" href="/css/toastr.min.css">
     <link rel="stylesheet" href="/css/lovschema.min.css">
 
     <script src="/js/vendor/modernizr.js"></script>
@@ -32,7 +33,7 @@
       <!-- Right Nav Section -->
       <ul class="right">
         <li x-ng-show="loggedIn" class="has-dropdown">
-          <a>{{username}}</a>
+          <a>{{display_name}}</a>
           <ul class="dropdown">
             <li><a x-ng-href="#user">Settings</a></li>
             <li><a x-ng-click="logout()">Log out</a></li>
@@ -40,7 +41,7 @@
         </li>
         <li x-ng-show="!loggedIn"><a x-ng-href="#register">Register</a></li>
         <li x-ng-show="!loggedIn" class="has-form">
-          <form method="post" x-ng-submit="login()">
+          <form method="post" x-ng-submit="login()" ls-error="loginErrorMessage">
             <div class="row collapse">
               <div class="large-4 small-4 columns">
                 <input type="text" placeholder="Username" x-ng-model="login_username">
@@ -69,6 +70,8 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="/js/jquery.stickytableheaders.min.js"></script>
   <script src="/js/jquery.qtip.min.js"></script>
+  <script src="/js/toastr.min.js"></script>
+  <script src="/js/mailgun_validator.min.js"></script>
   <script src="/js/foundation.min.js"></script>
   <script> $(document).foundation(); </script>
   </body>
