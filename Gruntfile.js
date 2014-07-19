@@ -72,14 +72,14 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'public/js/lovschema.js':
-            ['public/js/src/LovschemaApp.js',
-              'public/js/src/LovschemaResources.js',
-              'public/js/src/LovschemaFilters.js',
-              'public/js/src/LovschemaDirectives.js',
-              'public/js/src/RegisterCtrl.js',
-              'public/js/src/LoginCtrl.js',
-              'public/js/src/UserCtrl.js',
-              'public/js/src/CalendarCtrl.js'],
+            ['src/LovschemaApp.js',
+              'src/LovschemaResources.js',
+              'src/LovschemaFilters.js',
+              'src/LovschemaDirectives.js',
+              'src/RegisterCtrl.js',
+              'src/LoginCtrl.js',
+              'src/UserCtrl.js',
+              'src/CalendarCtrl.js'],
 
           'public/js/mailgun_validator.min.js': 'public/js/mailgun_validator.js'
         }
