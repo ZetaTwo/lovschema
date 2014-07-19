@@ -31,6 +31,10 @@
     border-left: 2px solid #000000;
 }
 
+#lovschemaCalendar tr td.busy {
+    background-color: #cc0000;
+}
+
 #lovschemaCalendar tr td:first-child,
 #lovschemaCalendar tr td:nth-child(2){
     text-align: right;

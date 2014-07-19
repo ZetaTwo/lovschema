@@ -52,6 +52,10 @@ lovschema.directive("lsStickyTable", function() {
           var events, content;
 
           events = scope.$eval(attrs.lsQtipMouse);
+          if(!events) {
+            return;
+          }
+
           content = "";
           for (var i = 0; i < events.length; i++) {
             if(events[i].name) {

@@ -11,8 +11,7 @@
     <tr x-ng-class="{endday: (hour.datetime | lsEndDay)}" x-ng-repeat-end>
       <td>{{ hour.datetime | lsDate }}</td>
       <td>{{ hour.datetime | lsTime }}</td>
-      <td x-ng-class="{free: hour.free }" x-ng-repeat="user in events.users">
-        <div x-ng-if="hour.users[user.username]" ls-qtip-mouse="hour.users[user.username]"></div>
+      <td x-ng-class="{free: hour.free, busy: hour.users[user.username]}" x-ng-repeat="user in events.users" ls-qtip-mouse="hour.users[user.username]">
       </td>
     </tr>
     </tbody>
