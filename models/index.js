@@ -30,4 +30,6 @@ var User = mongoose.model('User', UserSchema);
 exports.Event = Event;
 exports.Calendar = Calendar;
 exports.User = User;
-exports.Disconnect = function(fn) { mongoose.disconnect(fn) };
+exports.Disconnect = function(fn) {
+  mongoose.disconnect(fn);
+};

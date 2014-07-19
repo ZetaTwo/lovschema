@@ -1,5 +1,5 @@
 exports.error = function(res, code, err) {
-  if(typeof err == undefined) {
+  if(typeof err === undefined) {
     err = code;
     code = 500;
   }

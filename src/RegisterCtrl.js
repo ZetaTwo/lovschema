@@ -1,7 +1,7 @@
 lovschema.controller('RegisterCtrl', ['$scope', '$location', 'User', 'Login',
   function($scope, $location, User, Login) {
     if(Login.session) {
-      $location.path('/user'); return;
+      return $location.path('/user');
     }
     $scope.$on('loggedIn', function() {
       $location.path('/user');
@@ -13,7 +13,6 @@ lovschema.controller('RegisterCtrl', ['$scope', '$location', 'User', 'Login',
       $scope.submitted = true;
 
       //If not valid, return
-      //console.log($scope.email_valid);
       if(!$scope.register_form.$valid || !$scope.email_valid) {
         return false;
       }
@@ -22,16 +21,16 @@ lovschema.controller('RegisterCtrl', ['$scope', '$location', 'User', 'Login',
 
       //Create user and save
       var new_user = new User({ username: $scope.username, password: $scope.password});
-      new_user.$save(function success() {
+      new_user.$save(function () {
         $scope.error = false;
         $scope.submitting = false;
         $location.path('/');
 
-      }, function error(data) {
+      }, function (data) {
         $scope.error = data.data.error;
         $scope.submitting = false;
       });
 
       return true;
-    }
+    };
   }]);

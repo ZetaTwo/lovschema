@@ -18,14 +18,20 @@ exports.create = function(req, res) {
   var username = req.body.username.toLowerCase();
 
   database.User.findOne({username: username},
-    function login(err, user) {
+    function (err, user) {
       //If there are errors or we don't find the user, abort
-      if(err) { return error(res, 404, err); }
-      if(!user) { return error(res, 404, "User not found"); }
+      if(err) {
+        return error(res, 404, err);
+      }
+      if(!user) {
+        return error(res, 404, "User not found");
+      }
 
       //Compare password hashes
-      bcrypt.compare(req.body.password, user.password, function checkPassword(err, result) {
-        if(err) { error(res, err); return; }
+      bcrypt.compare(req.body.password, user.password, function (err, result) {
+        if(err) {
+          return error(res, err);
+        }
 
         //If everything matches, create the session.
         if(result) {

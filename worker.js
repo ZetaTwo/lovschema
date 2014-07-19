@@ -6,15 +6,14 @@ var calendar = require('./library/calendar.js')
 var parseCalendar = function(calendarId, callback) {
   //Get events from Google
   calendar.events(calendarId,
-    function parseCalendarEvents(err, cal) {
+    function (err, cal) {
       if(err) {
-        if(err.code == 404) {
+        if(err.code === 404) {
           console.error('Calendar: ' + calendarId + ' not found.');
           return callback(null, null);
         } else {
-          callback(err);
+          return callback(err);
         }
-        return;
       }
 
       //Create calendar
@@ -24,20 +23,28 @@ var parseCalendar = function(calendarId, callback) {
       };
 
       //Create all events
-      cal.items.forEach(function parseCalendarEvent(item) {
+      cal.items.forEach(function (item) {
         var start, end;
 
         //Only count current events
-        if(item.status == 'cancelled') { return; }
+        if(item.status === 'cancelled') {
+          return;
+        }
 
         //Get dateTime if available otherwise just date
-        if(item.start) { start = (item.start.dateTime) ? item.start.dateTime : item.start.date; }
-        if(item.end) { end = (item.end.dateTime) ? item.end.dateTime : item.end.date; }
+        if(item.start) {
+          start = (item.start.dateTime) ? item.start.dateTime : item.start.date;
+        }
+        if(item.end) {
+          end = (item.end.dateTime) ? item.end.dateTime : item.end.date;
+        }
 
         //Round events to nearest hour but make sure it is at least 1 hour
         start = moment(start).add('minutes', 30).startOf('hour');
         end = moment(end).add('minutes', 30).startOf('hour');
-        if(start.isSame(end)) { end.add('hour', 1); }
+        if(start.isSame(end)) {
+          end.add('hour', 1);
+        }
 
         //Add item to result
         if(!item.transparency) {
@@ -61,14 +68,16 @@ var parseUser = function(user, callback) {
   //Construct the calendar parsing tasks
   var cal_tasks = [];
   user.calendar_ids.forEach(function(calendarId) {
-    cal_tasks.push(function startParseCalendar(callback) {
+    cal_tasks.push(function (callback) {
       parseCalendar(calendarId, callback);
     });
   });
 
   //Run calendar tasks
-  async.parallel(cal_tasks, function addCalendars(err, calendars) {
-    if(err) { console.trace(err); return; }
+  async.parallel(cal_tasks, function (err, calendars) {
+    if(err) {
+      return console.trace(err);
+    }
 
     user.calendar_data = [];
     for(var i = 0; i < calendars.length; i++) {
@@ -78,8 +87,10 @@ var parseUser = function(user, callback) {
     }
 
     //And save the results
-    user.save(function savedUser(err, user) {
-      if(err) { console.trace(err); return; }
+    user.save(function (err, user) {
+      if(err) {
+        return console.trace(err);
+      }
 
       console.log('Updated user: ' + user.username);
       callback(null, user);
@@ -90,12 +101,14 @@ var parseUser = function(user, callback) {
 var getUsers = function(callback) {
   database.User.find({},
     { username: 1, calendar_ids: 1, calendar_data: 1},
-    function parseUsers(err, users) {
-      if(err) { console.trace(err); return; }
+    function (err, users) {
+      if(err) {
+        return console.trace(err);
+      }
 
       var user_tasks = [];
       //Create user tasks
-      users.forEach(function startParseUser(user) {
+      users.forEach(function (user) {
         user_tasks.push(function(callback) {
           parseUser(user, callback);
         });
@@ -109,8 +122,10 @@ var getUsers = function(callback) {
 
 //Start the worker
 exports.updateCalendars = function() {
-  getUsers(function finishedUsers(err, users) {
-    if(err) { console.trace(err); return; }
+  getUsers(function (err, users) {
+    if(err) {
+      return console.trace(err);
+    }
     console.log('Finished updating ' + users.length + ' users');
   });
-}
+};

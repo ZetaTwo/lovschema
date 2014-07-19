@@ -14,7 +14,7 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
         },
 
         logout: function() {
-          loginService.session.$delete(function deleteSession() {
+          loginService.session.$delete(function () {
             loginService.session = false;
             $rootScope.$broadcast('logout');
           });
@@ -53,17 +53,17 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
     })
     .filter('lsEndDay', function() {
       return function(input) {
-        return (input.getHours() == 23);
+        return (input.getHours() === 23);
       };
     })
     .filter('lsNewWeek', function() {
       return function(input) {
-        return (input.getDay() == 1 && input.getHours() == 0);
+        return (input.getDay() === 1 && input.getHours() === 0);
       };
     })
     .filter('lsNewMonth', function() {
       return function(input) {
-        return (input.getDate() == 1 && input.getHours() == 0);
+        return (input.getDate() === 1 && input.getHours() === 0);
       };
     })
     .filter('lsMonth', ['Config', function(Config) {

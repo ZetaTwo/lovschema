@@ -8,7 +8,6 @@ var express = require('express')
   , mongoose = require('mongoose')
   , worker = require('./worker')
   , debug = require('debug')('lovschema');
-//var http = require('http');
 
 var app = express();
 
@@ -81,8 +80,9 @@ process.on('SIGINT', function() {
 });
 
 //Update calendars every 15 minutes
-worker.updateCalendars(); //Initial update
-setInterval(function runWorker() {
+//Initial update
+worker.updateCalendars();
+setInterval(function () {
   debug('Spawning worker child process');
   worker.updateCalendars();
 }, 1000*60*15);

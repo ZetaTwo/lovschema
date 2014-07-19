@@ -1,26 +1,26 @@
 lovschema.controller('UserCtrl', ['$scope', '$location', 'Login', 'User',
   function($scope, $location, Login, User) {
     if(!Login.session) {
-      $location.path('/'); return;
+      return $location.path('/');
     }
 
     $scope.$on('logout', function() {
       $location.path('/');
     });
 
-    $scope.user = User.get({ username: Login.session.username }, function getUser(data) {
-    });
+    $scope.user = User.get({ username: Login.session.username });
 
     $scope.add_calendar = function() {
       var new_id = $scope.current_calendar;
-      if(new_id !== undefined && new_id !== '') {
+      if(new_id === undefined || new_id === '') {
+        return;
+      }
 
-        //TODO: Is this really the way to do it?
-        if($scope.user.calendar_ids.indexOf(new_id) < 0) {
-          $scope.user.calendar_ids.push(new_id);
-          $scope.current_calendar = "";
-          $scope.user.$update();
-        }
+      //TODO: Is this really the way to do it?
+      if($scope.user.calendar_ids.indexOf(new_id) < 0) {
+        $scope.user.calendar_ids.push(new_id);
+        $scope.current_calendar = "";
+        $scope.user.$update();
       }
     };
     $scope.remove_calendar = function(cal) {
@@ -36,19 +36,16 @@ lovschema.controller('UserCtrl', ['$scope', '$location', 'Login', 'User',
       var new_pass = $scope.new_password;
       var new_pass2 = $scope.new_password2;
 
-      if(old !== undefined && old !== '' &&
-        new_pass !== undefined && new_pass !== '' &&
-        new_pass2 !== undefined && new_pass2 !== '' &&
-        new_pass === new_pass2) {
+      if(new_pass !== '' && new_pass === new_pass2) {
 
         $scope.user.old_password = old;
         $scope.user.password = new_pass;
-        $scope.user.$update(function savedUser() {
+        $scope.user.$update(function () {
           $scope.old_password = '';
           $scope.new_password = '';
           $scope.new_password2 = '';
           $scope.password_error = { message: "Settings saved", good: true };
-        }, function errorUser(data) {
+        }, function (data) {
           $scope.password_error = { message: data.data.error, good: false };
         });
       } else {

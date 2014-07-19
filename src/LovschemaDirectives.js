@@ -5,14 +5,14 @@ lovschema.directive("lsStickyTable", function() {
         $(element).stickyTableHeaders({fixedOffset: $('#topbar')});
       }
     }
-  }
+  };
 })
   .directive("lsError", function() {
     return {
       link: {
         post: function(scope, element, attrs) {
           scope.$watch(attrs.lsError, function(newValue, oldValue, scope) {
-            if(newValue && newValue.message != '') {
+            if(newValue && newValue.message !== '') {
               toastr.options = {
                 "positionClass": "toast-top-center"
               };
@@ -27,7 +27,7 @@ lovschema.directive("lsStickyTable", function() {
           });
         }
       }
-    }
+    };
   })
   .directive("lsMailValidation", function() {
     return {
@@ -43,7 +43,7 @@ lovschema.directive("lsStickyTable", function() {
           });
         }
       }
-    }
+    };
   })
   .directive("lsQtipMouse", function() {
     return {
@@ -73,12 +73,12 @@ lovschema.directive("lsStickyTable", function() {
                 delay: 100
               },
               position: {
-                target: 'mouse', // Track the mouse as the positioning target
-                adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                target: 'mouse',
+                adjust: { x: 5, y: 5 }
               }
             });
           }
         }
       }
-    }
+    };
   });
