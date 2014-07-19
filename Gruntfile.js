@@ -72,14 +72,14 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'public/js/lovschema.js':
-            ['src/LovschemaApp.js',
-              'src/LovschemaResources.js',
-              'src/LovschemaFilters.js',
-              'src/LovschemaDirectives.js',
-              'src/RegisterCtrl.js',
-              'src/LoginCtrl.js',
-              'src/UserCtrl.js',
-              'src/CalendarCtrl.js'],
+            ['src/js/LovschemaApp.js',
+              'src/js/LovschemaResources.js',
+              'src/js/LovschemaFilters.js',
+              'src/js/LovschemaDirectives.js',
+              'src/js/RegisterCtrl.js',
+              'src/js/LoginCtrl.js',
+              'src/js/UserCtrl.js',
+              'src/js/CalendarCtrl.js'],
 
           'public/js/mailgun_validator.min.js': 'public/js/mailgun_validator.js'
         }
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
       combine: {
         files: {
           'public/css/vendor/foundation.min.css': ['public/css/vendor/foundation.css'],
-          'public/css/lovschema.min.css': ['public/css/lovschema.css']
+          'public/css/lovschema.min.css': ['src/css/lovschema.css']
         }
       }
     }
