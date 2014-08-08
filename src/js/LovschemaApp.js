@@ -3,15 +3,15 @@ var lovschema = angular.module('lovschema', ['ngRoute', 'ngResource', 'ngCookies
     $routeProvider
       .when('/', {
         controller:'CalendarCtrl',
-        templateUrl:'../../public/partials/calendar.html'
+        templateUrl:'partials/calendar.html'
       })
       .when('/register', {
         controller:'RegisterCtrl',
-        templateUrl:'../../public/partials/register.html'
+        templateUrl:'partials/register.html'
       })
       .when('/user', {
         controller:'UserCtrl',
-        templateUrl:'../../public/partials/user.html'
+        templateUrl:'partials/user.html'
       })
       .otherwise({
         redirectTo:'/'
