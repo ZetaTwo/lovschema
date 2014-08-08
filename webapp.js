@@ -18,7 +18,9 @@ app.set('view engine', 'jade');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 app.use(express.session({secret: 'H3lg1WJGwUjtIN6c5Ags'}));
 app.use(express.static(path.join(__dirname, 'public')));
