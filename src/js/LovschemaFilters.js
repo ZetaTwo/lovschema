@@ -33,7 +33,7 @@ lovschema.factory( 'Login', ['$rootScope', '$cookies', 'Session',
 
     .factory( 'Config', function() {
       return {
-        MORNING: 14,
+        MORNING: 8,
         DAYS: ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'],
         MONTHS: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December']
       };
